@@ -18,16 +18,11 @@ export const useContactForm = () => {
         data
       );
 
-      if (res.status === 200) {
-        alert("お問い合わせを送信しました。ありがとうございます！");
-        reset();
-      } else {
-        alert("送信に失敗しました。時間をおいて再度お試しください。");
-      }
+      alert("お問い合わせを送信しました。ありがとうございます！");
+      reset();
     } catch (error) {
       console.error("送信エラー:", error);
       alert("エラーが発生しました。ネットワークをご確認ください。");
-    } finally {
     }
   };
 
