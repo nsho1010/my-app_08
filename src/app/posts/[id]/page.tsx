@@ -23,7 +23,7 @@ const ArticleDetail = ({ params }: Props) => {
   return (
     <div className="w-full max-w-3xl mx-auto flex flex-col items-center pt-16 pb-8 min-h-[calc(100vh-4rem)]">
       <img
-        src={post.thumbnailUrl}
+        src={post.thumbnail.url}
         alt="データから取得した画像"
         className="mb-4 max-h-[40vh] object-contain"
       />
@@ -38,7 +38,7 @@ const ArticleDetail = ({ params }: Props) => {
                 key={catIndex}
                 className="text-blue-600 border-2 border-blue-600 rounded-md py-[0.2rem] px-[0.4rem] mr-2 last:mr-0"
               >
-                {category}
+                {category.name}
               </div>
             ))}
           </div>

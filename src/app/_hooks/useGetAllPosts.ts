@@ -11,8 +11,12 @@ export const useGetAllPosts = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const res = await axios.get(`${BASE_URL}/posts`);
-        setPosts(res.data.posts);
+        const res = await axios.get(`${BASE_URL}/posts`, {
+          headers: {
+            "X-MICROCMS-API-KEY": process.env.NEXT_PUBLIC_API_KEY,
+          },
+        });
+        setPosts(res.data.contents);
       } catch (err) {
         setError("記事一覧の取得に失敗しました。");
       } finally {
