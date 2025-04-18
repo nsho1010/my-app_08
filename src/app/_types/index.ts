@@ -3,8 +3,8 @@ export type Post = {
   title: string;
   content: string;
   createdAt: string;
-  categories: string[];
-  thumbnailUrl?: string;
+  categories: { id: string; name: string }[];
+  thumbnail: { url: string; height: number; width: number };
 };
 
 export type ContactFormData = {
