@@ -1,3 +1,4 @@
+import { Category } from "./../../../../generated/prisma/index.d";
 import { PrismaClient } from "@/generated/prisma";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -7,6 +8,7 @@ type CreateCategory = {
   name: string;
 };
 
+// 管理者＿カテゴリ作成API
 export const POST = async (req: NextRequest) => {
   try {
     const body: CreateCategory = await req.json();
@@ -32,5 +34,24 @@ export const POST = async (req: NextRequest) => {
         status: 500,
       }
     );
+  }
+};
+
+// 管理者＿カテゴリ一覧取得API
+export const GET = async (req: NextRequest) => {
+  try {
+    const categories = await prisma.category.findMany({
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+
+    return NextResponse.json(
+      { result: "OK", categories: categories },
+      { status: 200 }
+    );
+  } catch (error) {
+    if (error instanceof Error)
+      return NextResponse.json({ result: error.message }, { status: 400 });
   }
 };
