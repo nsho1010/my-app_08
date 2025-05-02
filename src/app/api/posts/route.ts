@@ -1,11 +1,10 @@
 import { PrismaClient } from "@/generated/prisma";
-import { NextApiRequest } from "next";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 const prisma = new PrismaClient();
 
-// 引数でリクエストを受け取る
-export const GET = async (req: NextApiRequest) => {
+// 記事一覧取得API
+export const GET = async (req: NextRequest) => {
   try {
     // DBから紐づけられているcategoryテーブルから全てのカラム全件取得
     const posts = await prisma.post.findMany({

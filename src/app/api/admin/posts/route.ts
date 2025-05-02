@@ -10,6 +10,7 @@ type CreatePost = {
   thumbnail: string;
 };
 
+// 記事投稿API
 export const POST = async (req: NextRequest) => {
   try {
     // リクエストをbodyに入れる
@@ -46,5 +47,30 @@ export const POST = async (req: NextRequest) => {
       { message: "投稿作成中にエラーが発生しました" },
       { status: 500 }
     );
+  }
+};
+
+// 管理者＿記事一覧取得API
+export const GET = async (req: NextRequest) => {
+  try {
+    // DBから紐づけられているcategoryテーブルから全てのカラム全件取得
+    const posts = await prisma.post.findMany({
+      include: {
+        postCategories: {
+          include: {
+            category: true,
+          },
+        },
+      },
+      // 降順（新しい順）
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+
+    return NextResponse.json({ result: "OK", posts: posts }, { status: 200 });
+  } catch (error) {
+    if (error instanceof Error)
+      return NextResponse.json({ result: error.message }, { status: 400 });
   }
 };
