@@ -1,5 +1,6 @@
 "use client";
 import { useAdminCategory } from "@/app/_hooks/admin/useAdminCategory";
+import { useAdminPost } from "@/app/_hooks/admin/useAdminPost";
 import { Category } from "@/app/_types";
 import { useForm } from "react-hook-form";
 
@@ -20,6 +21,8 @@ const AdminPostNewPage = () => {
 
   const { data, isLoading, error } = useAdminCategory();
 
+  const { createPost } = useAdminPost();
+
   if (isLoading) return <p>読み込み中...</p>;
   if (error)
     return <p className="text-red-500">カテゴリーの取得に失敗しました。</p>;
@@ -27,9 +30,14 @@ const AdminPostNewPage = () => {
 
   const onSubmit = async (data: FormData) => {
     try {
-      // ここはAPIにPOSTする
-      console.log("送信データ:", data);
-      alert("記事を作成しました！");
+      await createPost({
+        title: data.title,
+        content: data.content,
+        thumbnail: data.thumbnailUrl,
+        categories: [{ id: Number(data.category) }],
+      });
+
+      alert("記事が新規作成されました。");
       reset();
     } catch (error) {
       console.error(error);
