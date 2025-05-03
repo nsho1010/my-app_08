@@ -1,12 +1,24 @@
 "use client";
 
-import { useAdminPostList } from "@/app/_hooks/admin/useAdminPostList";
+import { useAdminPost } from "@/app/_hooks/admin/useAdminPost";
 import Link from "next/link";
 import { format } from "date-fns";
 import { Post } from "@/app/_types";
 
 const AdminPostsPage = () => {
-  const { data, isLoading, error } = useAdminPostList();
+  const { data, isLoading, error } = useAdminPost();
+
+  // 読み込み中
+  if (isLoading) return <div>読み込み中...</div>;
+
+  // エラー
+  if (error) return <div>エラーが発生しました。</div>;
+
+  // データなし
+  if (!data) return <div>投稿データがありません。</div>;
+
+  // 記事0件
+  if (data.posts.length === 0) return <div>記事がありません。</div>;
 
   return (
     <>
@@ -19,12 +31,6 @@ const AdminPostsPage = () => {
           新規作成
         </Link>
       </div>
-
-      {/* 状態別の表示 */}
-      {isLoading && <div>読み込み中...</div>}
-      {error && <div>エラーが発生しました。</div>}
-      {!data && <div>投稿データがありません。</div>}
-      {data?.posts?.length === 0 && <div>記事がありません。</div>}
 
       <div>
         {data?.posts?.map((post: Post) => (

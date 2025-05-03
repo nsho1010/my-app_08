@@ -5,7 +5,7 @@ const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 
-export const useAdminPostList = () => {
+export const useAdminPost = () => {
   const { data, error, isLoading } = useSWR<GetPostsResponse>(
     `${API_URL}/api/admin/posts`,
     fetcher
