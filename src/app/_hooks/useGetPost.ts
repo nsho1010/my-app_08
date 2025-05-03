@@ -1,33 +1,18 @@
-import { useEffect, useState } from "react";
 import axios from "axios";
-import { BASE_URL } from "../_constants";
-import { Post } from "../_types";
+import useSWR from "swr";
+const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+
+const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 
 export const useGetPost = (id: string) => {
-  const [post, setPost] = useState<Post | null>(null);
-  const [error, setError] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const { data, error, isLoading } = useSWR(
+    `${API_URL}/api/posts/${id}`,
+    fetcher
+  );
 
-  useEffect(() => {
-    const fetchPost = async () => {
-      try {
-        const res = await axios.get(`${BASE_URL}/posts/${id}`, {
-          headers: {
-            "X-MICROCMS-API-KEY": process.env.NEXT_PUBLIC_API_KEY,
-          },
-        });
-        setPost(res.data);
-      } catch (err) {
-        setError("記事の取得に失敗しました。");
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    if (id) {
-      fetchPost();
-    }
-  }, [id]);
-
-  return { post, error, isLoading };
+  return {
+    data,
+    error,
+    isLoading,
+  };
 };
