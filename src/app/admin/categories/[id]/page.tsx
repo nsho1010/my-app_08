@@ -1,20 +1,18 @@
 "use client";
 
-import { useForm } from "react-hook-form";
 import { useRouter, useParams } from "next/navigation";
 import { useAdminCategory } from "@/app/_hooks/admin/useAdminCategory";
-import { Category } from "@/app/_types";
-import { useEffect } from "react";
-
-type CategoryFormData = {
-  name: string;
-};
+import { useEffect, useState } from "react";
+import CategoryForm, { CategoryFormData } from "../components/CategoryForm";
 
 // 管理者_カテゴリー編集ページ
-const AdminPostEditPage = () => {
+const AdminCategoryEditPage = () => {
   const router = useRouter();
   const params = useParams<{ id: string }>();
   const categoryId = params.id;
+  const [initialData, setInitialData] = useState<CategoryFormData | undefined>(
+    undefined
+  );
 
   const { data, updateCategory, deleteCategory, detailCategory } =
     useAdminCategory();
@@ -23,21 +21,14 @@ const AdminPostEditPage = () => {
   const { data: detailData, isLoading: isDetailLoading } =
     detailCategory(categoryId);
 
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { isSubmitting, errors },
-  } = useForm<CategoryFormData>();
-
   // カテゴリーデータ取得後にフォームへセット
   useEffect(() => {
     if (!detailData) return;
     if (!detailData.category) return;
-    reset({
+    setInitialData({
       name: detailData.category.name,
     });
-  }, [detailData, reset]);
+  }, [detailData]);
 
   const onSubmit = async (data: CategoryFormData) => {
     await updateCategory(categoryId, {
@@ -60,41 +51,17 @@ const AdminPostEditPage = () => {
       <main className="flex-1 p-8">
         <h1 className="text-2xl font-bold mb-6">カテゴリー編集</h1>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 max-w-lg">
-          <div>
-            <label className="block mb-1">カテゴリー名</label>
-            <input
-              {...register("name", { required: "カテゴリー名は必須です" })}
-              className="border p-2 w-full"
-              disabled={isDetailLoading}
-            />
-            {errors.name && (
-              <p className="text-red-500">{errors.name.message}</p>
-            )}
-          </div>
-
-          <div className="flex space-x-4">
-            <button
-              type="submit"
-              disabled={isSubmitting || isDetailLoading}
-              className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:bg-gray-400"
-            >
-              更新
-            </button>
-
-            <button
-              type="button"
-              disabled={isSubmitting || isDetailLoading}
-              onClick={handleDelete}
-              className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
-            >
-              削除
-            </button>
-          </div>
-        </form>
+        <CategoryForm
+          initialData={initialData}
+          isLoading={isDetailLoading}
+          onSubmit={onSubmit}
+          submitLabel="更新"
+          onDelete={handleDelete}
+          showDeleteButton={true}
+        />
       </main>
     </div>
   );
 };
 
-export default AdminPostEditPage;
+export default AdminCategoryEditPage;
