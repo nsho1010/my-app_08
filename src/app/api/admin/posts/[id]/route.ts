@@ -10,7 +10,7 @@ type UpdatePost = {
   thumbnailUrl: string;
 };
 
-// 管理者＿記事一覧取得API
+// 管理者＿記事詳細取得API
 export const GET = async (
   req: NextRequest,
   { params }: { params: { id: string } }

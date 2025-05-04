@@ -17,6 +17,13 @@ export type PostCategory = {
   category: Category;
 };
 
+export type PostRequest = {
+  title: string;
+  content: string;
+  thumbnail: string;
+  categories: { id: number }[];
+};
+
 export type Category = {
   id: number;
   name: string;
