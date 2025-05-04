@@ -10,7 +10,7 @@ import { useEffect } from "react";
 type PostFormData = {
   title: string;
   content: string;
-  thumbnailUrl: string;
+  thumbnail: string;
   category: string;
 };
 
@@ -41,7 +41,7 @@ const AdminPostEditPage = () => {
     reset({
       title: detailData.post.title,
       content: detailData.post.content,
-      thumbnailUrl: detailData.post.thumbnailUrl,
+      thumbnail: detailData.post.thumbnailUrl,
       category: String(detailData.post.postCategories?.[0]?.id ?? ""),
     });
   }, [detailData, reset]);
@@ -52,7 +52,7 @@ const AdminPostEditPage = () => {
     await updatePost(postId, {
       title: data.title,
       content: data.content,
-      thumbnail: data.thumbnailUrl,
+      thumbnailUrl: data.thumbnail,
       categories: [{ id: Number(data.category) }],
     });
     alert("記事を更新しました");
@@ -94,10 +94,7 @@ const AdminPostEditPage = () => {
 
           <div>
             <label className="block mb-1">サムネイルURL</label>
-            <input
-              {...register("thumbnailUrl")}
-              className="border p-2 w-full"
-            />
+            <input {...register("thumbnail")} className="border p-2 w-full" />
           </div>
 
           <div>

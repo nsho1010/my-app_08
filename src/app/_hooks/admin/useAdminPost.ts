@@ -37,7 +37,7 @@ export const useAdminPost = () => {
     postData: {
       title: string;
       content: string;
-      thumbnail: string;
+      thumbnailUrl: string;
       categories: { id: number }[];
     }
   ) => {
