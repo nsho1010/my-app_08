@@ -14,6 +14,7 @@ type FormData = {
   category: string;
 };
 
+// 管理者_記事編集ページ
 const AdminPostEditPage = () => {
   const router = useRouter();
   const params = useParams<{ id: string }>();
