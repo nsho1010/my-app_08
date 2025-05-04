@@ -35,7 +35,12 @@ const AdminPostsPage = () => {
       <div>
         {data?.posts?.map((post: Post) => (
           <div key={post.id} className="border-b py-4">
-            <p className="text-lg font-bold">{post.title}</p>
+            <Link
+              href={`/admin/posts/${post.id}`}
+              className="text-lg font-bold text-blue-600 hover:underline"
+            >
+              {post.title}
+            </Link>
             <p className="text-sm text-gray-500">
               {format(new Date(post.createdAt), "yyyy/M/d")}
             </p>

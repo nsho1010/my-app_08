@@ -7,7 +7,7 @@ import { useAdminPost } from "@/app/_hooks/admin/useAdminPost";
 import { Category } from "@/app/_types";
 import { useEffect } from "react";
 
-type FormData = {
+type PostFormData = {
   title: string;
   content: string;
   thumbnailUrl: string;
@@ -32,7 +32,7 @@ const AdminPostEditPage = () => {
     handleSubmit,
     reset,
     formState: { isSubmitting, errors },
-  } = useForm<FormData>();
+  } = useForm<PostFormData>();
 
   // 記事データ取得後にフォームへセット
   useEffect(() => {
@@ -48,7 +48,7 @@ const AdminPostEditPage = () => {
 
   if (isCategoryLoading || isDetailLoading) return <p>読み込み中...</p>;
 
-  const onSubmit = async (data: FormData) => {
+  const onSubmit = async (data: PostFormData) => {
     await updatePost(postId, {
       title: data.title,
       content: data.content,

@@ -36,6 +36,11 @@ export type GetPostsResponse = {
   posts: Post[];
 };
 
+export type GetCategoryResponse = {
+  result: string;
+  categories: Category[];
+};
+
 export type ContactFormData = {
   name: string;
   email: string;

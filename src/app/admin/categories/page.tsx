@@ -35,7 +35,12 @@ const AdminCategoriesPage = () => {
       <div>
         {data?.categories?.map((category: Category) => (
           <div key={category.id} className="border-b py-4">
-            <p className="text-lg font-bold">{category.name}</p>
+            <Link
+              href={`/admin/categories/${category.id}`}
+              className="text-lg font-bold text-blue-600 hover:underline"
+            >
+              {category.name}
+            </Link>
             <p className="text-sm text-gray-500">
               {format(new Date(category.createdAt), "yyyy/M/d")}
             </p>
