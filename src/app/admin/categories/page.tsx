@@ -33,7 +33,7 @@ const AdminCategoriesPage = () => {
       </div>
 
       <div>
-        {data?.categories?.map((category: Category) => (
+        {data.categories.map((category: Category) => (
           <div key={category.id} className="border-b py-4">
             <Link
               href={`/admin/categories/${category.id}`}

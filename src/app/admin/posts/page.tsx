@@ -33,7 +33,7 @@ const AdminPostsPage = () => {
       </div>
 
       <div>
-        {data?.posts?.map((post: Post) => (
+        {data.posts.map((post: Post) => (
           <div key={post.id} className="border-b py-4">
             <Link
               href={`/admin/posts/${post.id}`}

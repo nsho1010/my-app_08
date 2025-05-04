@@ -51,7 +51,7 @@ const AdminPostEditPage = () => {
     if (confirm("本当に削除しますか？")) {
       await deleteCategory(categoryId);
       alert("カテゴリーを削除しました");
-      router.push("/admin/categories");
+      router.replace("/admin/categories");
     }
   };
 
@@ -66,6 +66,7 @@ const AdminPostEditPage = () => {
             <input
               {...register("name", { required: "カテゴリー名は必須です" })}
               className="border p-2 w-full"
+              disabled={isDetailLoading}
             />
             {errors.name && (
               <p className="text-red-500">{errors.name.message}</p>
@@ -75,7 +76,7 @@ const AdminPostEditPage = () => {
           <div className="flex space-x-4">
             <button
               type="submit"
-              disabled={isSubmitting}
+              disabled={isSubmitting || isDetailLoading}
               className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:bg-gray-400"
             >
               更新
@@ -83,6 +84,7 @@ const AdminPostEditPage = () => {
 
             <button
               type="button"
+              disabled={isSubmitting || isDetailLoading}
               onClick={handleDelete}
               className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
             >
