@@ -4,7 +4,7 @@ import { useAdminPost } from "@/app/_hooks/admin/useAdminPost";
 import { Category } from "@/app/_types";
 import { useForm } from "react-hook-form";
 
-type FormData = {
+type PostFormData = {
   title: string;
   content: string;
   thumbnailUrl: string;
@@ -17,7 +17,7 @@ const AdminPostNewPage = () => {
     handleSubmit,
     reset,
     formState: { isSubmitting, errors },
-  } = useForm<FormData>();
+  } = useForm<PostFormData>();
 
   const { data, isLoading, error } = useAdminCategory();
 
@@ -28,7 +28,7 @@ const AdminPostNewPage = () => {
     return <p className="text-red-500">カテゴリーの取得に失敗しました。</p>;
   if (!data) return <p>カテゴリー情報がありません。</p>;
 
-  const onSubmit = async (data: FormData) => {
+  const onSubmit = async (data: PostFormData) => {
     try {
       await createPost({
         title: data.title,
