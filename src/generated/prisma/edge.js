@@ -83,6 +83,9 @@ Prisma.NullTypes = {
  * Enums
  */
 exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
+  ReadUncommitted: 'ReadUncommitted',
+  ReadCommitted: 'ReadCommitted',
+  RepeatableRead: 'RepeatableRead',
   Serializable: 'Serializable'
 });
 
@@ -113,6 +116,11 @@ exports.Prisma.PostCategoryScalarFieldEnum = {
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
+};
+
+exports.Prisma.QueryMode = {
+  default: 'default',
+  insensitive: 'insensitive'
 };
 
 
@@ -159,18 +167,17 @@ const config = {
   "datasourceNames": [
     "db"
   ],
-  "activeProvider": "sqlite",
-  "postinstall": false,
+  "activeProvider": "postgresql",
   "inlineDatasources": {
     "db": {
       "url": {
         "fromEnvVar": "DATABASE_URL",
-        "value": null
+        "value": "postgresql://postgres.iawdmpahrmkbbsvklxrm:nagamura7641@aws-0-ap-northeast-1.pooler.supabase.com:6543/postgres?pgbouncer=true"
       }
     }
   },
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"sqlite\"\n  url      = env(\"DATABASE_URL\")\n}\n\n// ブログ記事テーブル\nmodel Post {\n  id             Int            @id @default(autoincrement())\n  title          String\n  content        String\n  thumbnailUrl   String\n  createdAt      DateTime       @default(now())\n  updatedAt      DateTime       @updatedAt\n  postCategories PostCategory[]\n}\n\n// カテゴリーテーブル\nmodel Category {\n  id        Int            @id @default(autoincrement())\n  name      String\n  createdAt DateTime       @default(now())\n  updatedAt DateTime       @updatedAt\n  posts     PostCategory[]\n}\n\n// ブログ記事とカテゴリーを多対多で紐付ける中間テーブル\nmodel PostCategory {\n  id         Int      @id @default(autoincrement())\n  postId     Int\n  categoryId Int\n  createdAt  DateTime @default(now())\n  updatedAt  DateTime @updatedAt\n  post       Post     @relation(fields: [postId], references: [id], onDelete: Cascade)\n  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)\n}\n",
-  "inlineSchemaHash": "ee12f0719451e91d55b02e6c3da34ca78c6cb2837cedf3f78614f4e1f5d15bd0",
+  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider  = \"postgresql\"\n  url       = env(\"DATABASE_URL\")\n  directUrl = env(\"DIRECT_URL\")\n}\n\n// ブログ記事テーブル\nmodel Post {\n  id             Int            @id @default(autoincrement())\n  title          String\n  content        String\n  thumbnailUrl   String\n  createdAt      DateTime       @default(now())\n  updatedAt      DateTime       @updatedAt\n  postCategories PostCategory[]\n}\n\n// カテゴリーテーブル\nmodel Category {\n  id        Int            @id @default(autoincrement())\n  name      String\n  createdAt DateTime       @default(now())\n  updatedAt DateTime       @updatedAt\n  posts     PostCategory[]\n}\n\n// ブログ記事とカテゴリーを多対多で紐付ける中間テーブル\nmodel PostCategory {\n  id         Int      @id @default(autoincrement())\n  postId     Int\n  categoryId Int\n  createdAt  DateTime @default(now())\n  updatedAt  DateTime @updatedAt\n  post       Post     @relation(fields: [postId], references: [id], onDelete: Cascade)\n  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)\n}\n",
+  "inlineSchemaHash": "bd89e6958a1d54efdae11b9e917f57fae56c4ea14e5ca63ef606cc5214d94bb8",
   "copyEngine": true
 }
 config.dirname = '/'
