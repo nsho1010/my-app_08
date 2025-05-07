@@ -30,7 +30,7 @@ const AdminPostEditPage = () => {
     setInitialData({
       title: detailData.post.title,
       content: detailData.post.content,
-      thumbnail: detailData.post.thumbnailUrl,
+      thumbnail: detailData.post.thumbnailImageKey,
       category: String(detailData.post.postCategories?.[0]?.id ?? ""),
     });
   }, [detailData]);
@@ -39,7 +39,7 @@ const AdminPostEditPage = () => {
     await updatePost(postId, {
       title: data.title,
       content: data.content,
-      thumbnailUrl: data.thumbnail,
+      thumbnailImageKey: data.thumbnail,
       categories: [{ id: Number(data.category) }],
     });
     alert("記事を更新しました");

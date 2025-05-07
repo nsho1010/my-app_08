@@ -17,9 +17,6 @@ const AdminCategoriesPage = () => {
   // データなし
   if (!data) return <div>投稿データがありません。</div>;
 
-  // 記事0件
-  if (data.categories.length === 0) return <div>カテゴリーがありません。</div>;
-
   return (
     <>
       <div className="flex justify-between items-center mb-6">
@@ -32,21 +29,27 @@ const AdminCategoriesPage = () => {
         </Link>
       </div>
 
-      <div>
-        {data.categories.map((category: Category) => (
-          <div key={category.id} className="border-b py-4">
-            <Link
-              href={`/admin/categories/${category.id}`}
-              className="text-lg font-bold text-blue-600 hover:underline"
-            >
-              {category.name}
-            </Link>
-            <p className="text-sm text-gray-500">
-              {format(new Date(category.createdAt), "yyyy/M/d")}
-            </p>
-          </div>
-        ))}
-      </div>
+      {data.categories.length === 0 ? (
+        <div className="text-center py-8 text-gray-500">
+          カテゴリーがありません。新規作成ボタンからカテゴリーを作成してください。
+        </div>
+      ) : (
+        <div>
+          {data.categories.map((category: Category) => (
+            <div key={category.id} className="border-b py-4">
+              <Link
+                href={`/admin/categories/${category.id}`}
+                className="text-lg font-bold text-blue-600 hover:underline"
+              >
+                {category.name}
+              </Link>
+              <p className="text-sm text-gray-500">
+                {format(new Date(category.createdAt), "yyyy/M/d")}
+              </p>
+            </div>
+          ))}
+        </div>
+      )}
     </>
   );
 };

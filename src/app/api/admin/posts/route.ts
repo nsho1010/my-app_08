@@ -22,7 +22,7 @@ export const POST = async (req: NextRequest) => {
       data: {
         title: body.title,
         content: body.content,
-        thumbnailUrl: body.thumbnail,
+        thumbnailImageKey: body.thumbnail,
       },
     });
 

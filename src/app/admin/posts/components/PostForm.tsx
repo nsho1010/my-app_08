@@ -2,7 +2,10 @@
 
 import { useForm, FormProvider } from "react-hook-form";
 import { Category } from "@/app/_types";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useAdminPost } from "@/app/_hooks/admin/useAdminPost";
+import { supabase } from "@/utils/supabase";
+import Image from "next/image";
 
 export type PostFormData = {
   title: string;
@@ -30,9 +33,7 @@ const PostForm = ({
   onDelete,
   showDeleteButton = false,
 }: PostFormProps) => {
-  // フォームの作成
   const methods = useForm<PostFormData>({
-    // デフォルト値は空のオブジェクトか初期データを使用
     defaultValues: initialData || {
       title: "",
       content: "",
@@ -41,6 +42,46 @@ const PostForm = ({
     },
   });
 
+  const { uploadThumbnail } = useAdminPost();
+  const [thumbnailImageUrl, setThumbnailImageUrl] = useState<null | string>(
+    null
+  );
+
+  const handleImageChange = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    if (!event.target.files || event.target.files.length === 0) {
+      return;
+    }
+
+    try {
+      const file = event.target.files[0];
+      const thumbnailPath = await uploadThumbnail(file);
+      methods.setValue("thumbnail", thumbnailPath);
+    } catch (error) {
+      if (error instanceof Error) {
+        alert(error.message);
+      }
+    }
+  };
+
+  useEffect(() => {
+    const thumbnailKey = methods.watch("thumbnail");
+    if (!thumbnailKey) return;
+
+    const fetcher = async () => {
+      const {
+        data: { publicUrl },
+      } = await supabase.storage
+        .from("post-thumbnail")
+        .getPublicUrl(thumbnailKey);
+
+      setThumbnailImageUrl(publicUrl);
+    };
+
+    fetcher();
+  }, [methods.watch("thumbnail")]);
+
   const {
     register,
     handleSubmit,
@@ -48,11 +89,10 @@ const PostForm = ({
     formState: { isSubmitting, errors },
   } = methods;
 
-  // initialDataが変更されたらフォームをリセット
   useEffect(() => {
     if (initialData) {
       reset(initialData, {
-        keepDefaultValues: true, // デフォルト値を保持
+        keepDefaultValues: true,
       });
     }
   }, [initialData, reset]);
@@ -82,8 +122,36 @@ const PostForm = ({
         </div>
 
         <div>
-          <label className="block mb-1">サムネイルURL</label>
-          <input {...register("thumbnail")} className="border p-2 w-full" />
+          <label className="block mb-1">サムネイル画像</label>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleImageChange}
+            className="border p-2 w-full"
+          />
+          {methods.watch("thumbnail") && (
+            <p className="text-sm text-gray-500">
+              アップロード済み: {methods.watch("thumbnail")}
+            </p>
+          )}
+          {thumbnailImageUrl && (
+            <div className="mt-2">
+              <Image
+                src={thumbnailImageUrl}
+                alt="thumbnail"
+                width={400}
+                height={400}
+                unoptimized={true}
+              />
+            </div>
+            // <div className="mt-2">
+            //   <img
+            //     src={thumbnailImageUrl}
+            //     alt="thumbnail"
+            //     style={{ width: "400px", height: "400px", objectFit: "cover" }}
+            //   />
+            // </div>
+          )}
         </div>
 
         <div>

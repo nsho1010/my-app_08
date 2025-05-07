@@ -1136,7 +1136,7 @@ export namespace Prisma {
     id: number | null
     title: string | null
     content: string | null
-    thumbnailUrl: string | null
+    thumbnailImageKey: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -1145,7 +1145,7 @@ export namespace Prisma {
     id: number | null
     title: string | null
     content: string | null
-    thumbnailUrl: string | null
+    thumbnailImageKey: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -1154,7 +1154,7 @@ export namespace Prisma {
     id: number
     title: number
     content: number
-    thumbnailUrl: number
+    thumbnailImageKey: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -1173,7 +1173,7 @@ export namespace Prisma {
     id?: true
     title?: true
     content?: true
-    thumbnailUrl?: true
+    thumbnailImageKey?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -1182,7 +1182,7 @@ export namespace Prisma {
     id?: true
     title?: true
     content?: true
-    thumbnailUrl?: true
+    thumbnailImageKey?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -1191,7 +1191,7 @@ export namespace Prisma {
     id?: true
     title?: true
     content?: true
-    thumbnailUrl?: true
+    thumbnailImageKey?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -1287,7 +1287,7 @@ export namespace Prisma {
     id: number
     title: string
     content: string
-    thumbnailUrl: string
+    thumbnailImageKey: string
     createdAt: Date
     updatedAt: Date
     _count: PostCountAggregateOutputType | null
@@ -1315,7 +1315,7 @@ export namespace Prisma {
     id?: boolean
     title?: boolean
     content?: boolean
-    thumbnailUrl?: boolean
+    thumbnailImageKey?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     postCategories?: boolean | Post$postCategoriesArgs<ExtArgs>
@@ -1326,7 +1326,7 @@ export namespace Prisma {
     id?: boolean
     title?: boolean
     content?: boolean
-    thumbnailUrl?: boolean
+    thumbnailImageKey?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["post"]>
@@ -1335,7 +1335,7 @@ export namespace Prisma {
     id?: boolean
     title?: boolean
     content?: boolean
-    thumbnailUrl?: boolean
+    thumbnailImageKey?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["post"]>
@@ -1344,12 +1344,12 @@ export namespace Prisma {
     id?: boolean
     title?: boolean
     content?: boolean
-    thumbnailUrl?: boolean
+    thumbnailImageKey?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type PostOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "content" | "thumbnailUrl" | "createdAt" | "updatedAt", ExtArgs["result"]["post"]>
+  export type PostOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "content" | "thumbnailImageKey" | "createdAt" | "updatedAt", ExtArgs["result"]["post"]>
   export type PostInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     postCategories?: boolean | Post$postCategoriesArgs<ExtArgs>
     _count?: boolean | PostCountOutputTypeDefaultArgs<ExtArgs>
@@ -1366,7 +1366,7 @@ export namespace Prisma {
       id: number
       title: string
       content: string
-      thumbnailUrl: string
+      thumbnailImageKey: string
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["post"]>
@@ -1796,7 +1796,7 @@ export namespace Prisma {
     readonly id: FieldRef<"Post", 'Int'>
     readonly title: FieldRef<"Post", 'String'>
     readonly content: FieldRef<"Post", 'String'>
-    readonly thumbnailUrl: FieldRef<"Post", 'String'>
+    readonly thumbnailImageKey: FieldRef<"Post", 'String'>
     readonly createdAt: FieldRef<"Post", 'DateTime'>
     readonly updatedAt: FieldRef<"Post", 'DateTime'>
   }
@@ -4446,7 +4446,7 @@ export namespace Prisma {
     id: 'id',
     title: 'title',
     content: 'content',
-    thumbnailUrl: 'thumbnailUrl',
+    thumbnailImageKey: 'thumbnailImageKey',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -4562,7 +4562,7 @@ export namespace Prisma {
     id?: IntFilter<"Post"> | number
     title?: StringFilter<"Post"> | string
     content?: StringFilter<"Post"> | string
-    thumbnailUrl?: StringFilter<"Post"> | string
+    thumbnailImageKey?: StringFilter<"Post"> | string
     createdAt?: DateTimeFilter<"Post"> | Date | string
     updatedAt?: DateTimeFilter<"Post"> | Date | string
     postCategories?: PostCategoryListRelationFilter
@@ -4572,7 +4572,7 @@ export namespace Prisma {
     id?: SortOrder
     title?: SortOrder
     content?: SortOrder
-    thumbnailUrl?: SortOrder
+    thumbnailImageKey?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     postCategories?: PostCategoryOrderByRelationAggregateInput
@@ -4585,7 +4585,7 @@ export namespace Prisma {
     NOT?: PostWhereInput | PostWhereInput[]
     title?: StringFilter<"Post"> | string
     content?: StringFilter<"Post"> | string
-    thumbnailUrl?: StringFilter<"Post"> | string
+    thumbnailImageKey?: StringFilter<"Post"> | string
     createdAt?: DateTimeFilter<"Post"> | Date | string
     updatedAt?: DateTimeFilter<"Post"> | Date | string
     postCategories?: PostCategoryListRelationFilter
@@ -4595,7 +4595,7 @@ export namespace Prisma {
     id?: SortOrder
     title?: SortOrder
     content?: SortOrder
-    thumbnailUrl?: SortOrder
+    thumbnailImageKey?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: PostCountOrderByAggregateInput
@@ -4612,7 +4612,7 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"Post"> | number
     title?: StringWithAggregatesFilter<"Post"> | string
     content?: StringWithAggregatesFilter<"Post"> | string
-    thumbnailUrl?: StringWithAggregatesFilter<"Post"> | string
+    thumbnailImageKey?: StringWithAggregatesFilter<"Post"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Post"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Post"> | Date | string
   }
@@ -4732,7 +4732,7 @@ export namespace Prisma {
   export type PostCreateInput = {
     title: string
     content: string
-    thumbnailUrl: string
+    thumbnailImageKey: string
     createdAt?: Date | string
     updatedAt?: Date | string
     postCategories?: PostCategoryCreateNestedManyWithoutPostInput
@@ -4742,7 +4742,7 @@ export namespace Prisma {
     id?: number
     title: string
     content: string
-    thumbnailUrl: string
+    thumbnailImageKey: string
     createdAt?: Date | string
     updatedAt?: Date | string
     postCategories?: PostCategoryUncheckedCreateNestedManyWithoutPostInput
@@ -4751,7 +4751,7 @@ export namespace Prisma {
   export type PostUpdateInput = {
     title?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
-    thumbnailUrl?: StringFieldUpdateOperationsInput | string
+    thumbnailImageKey?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     postCategories?: PostCategoryUpdateManyWithoutPostNestedInput
@@ -4761,7 +4761,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
-    thumbnailUrl?: StringFieldUpdateOperationsInput | string
+    thumbnailImageKey?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     postCategories?: PostCategoryUncheckedUpdateManyWithoutPostNestedInput
@@ -4771,7 +4771,7 @@ export namespace Prisma {
     id?: number
     title: string
     content: string
-    thumbnailUrl: string
+    thumbnailImageKey: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -4779,7 +4779,7 @@ export namespace Prisma {
   export type PostUpdateManyMutationInput = {
     title?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
-    thumbnailUrl?: StringFieldUpdateOperationsInput | string
+    thumbnailImageKey?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -4788,7 +4788,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
-    thumbnailUrl?: StringFieldUpdateOperationsInput | string
+    thumbnailImageKey?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -4945,7 +4945,7 @@ export namespace Prisma {
     id?: SortOrder
     title?: SortOrder
     content?: SortOrder
-    thumbnailUrl?: SortOrder
+    thumbnailImageKey?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -4958,7 +4958,7 @@ export namespace Prisma {
     id?: SortOrder
     title?: SortOrder
     content?: SortOrder
-    thumbnailUrl?: SortOrder
+    thumbnailImageKey?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -4967,7 +4967,7 @@ export namespace Prisma {
     id?: SortOrder
     title?: SortOrder
     content?: SortOrder
-    thumbnailUrl?: SortOrder
+    thumbnailImageKey?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -5413,7 +5413,7 @@ export namespace Prisma {
   export type PostCreateWithoutPostCategoriesInput = {
     title: string
     content: string
-    thumbnailUrl: string
+    thumbnailImageKey: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -5422,7 +5422,7 @@ export namespace Prisma {
     id?: number
     title: string
     content: string
-    thumbnailUrl: string
+    thumbnailImageKey: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -5464,7 +5464,7 @@ export namespace Prisma {
   export type PostUpdateWithoutPostCategoriesInput = {
     title?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
-    thumbnailUrl?: StringFieldUpdateOperationsInput | string
+    thumbnailImageKey?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -5473,7 +5473,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
-    thumbnailUrl?: StringFieldUpdateOperationsInput | string
+    thumbnailImageKey?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

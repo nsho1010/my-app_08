@@ -24,7 +24,7 @@ const ArticleDetail = ({ params }: Props) => {
   return (
     <div className="w-full max-w-3xl mx-auto flex flex-col items-center pt-16 pb-8 min-h-[calc(100vh-4rem)]">
       <img
-        src={data.post.thumbnailUrl}
+        src={data.post.thumbnailImageKey}
         alt="データから取得した画像"
         className="mb-4 max-h-[40vh] object-contain"
       />

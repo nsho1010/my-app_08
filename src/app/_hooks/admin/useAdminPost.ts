@@ -2,6 +2,8 @@ import { GetPostsResponse, Post } from "@/app/_types";
 import axios from "axios";
 import useSWR from "swr";
 import { useSupabaseSession } from "../useSupabaseSession";
+import { supabase } from "@/utils/supabase";
+import { v4 as uuidv4 } from "uuid";
 const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 const fetcher = async (url: string, token: string) => {
@@ -31,6 +33,23 @@ export const useAdminPost = () => {
     );
   };
 
+  // 画像アップロード
+  const uploadThumbnail = async (file: File): Promise<string> => {
+    const filePath = `private/${uuidv4()}`;
+    const { data, error } = await supabase.storage
+      .from("post-thumbnail")
+      .upload(filePath, file, {
+        cacheControl: "3600",
+        upsert: false,
+      });
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    return data.path;
+  };
+
   // 記事新規作成POST
   const createPost = async (postData: {
     title: string;
@@ -38,12 +57,19 @@ export const useAdminPost = () => {
     thumbnail: string;
     categories: { id: number }[];
   }) => {
-    await axios.post(`${API_URL}/api/admin/posts`, postData, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: token,
+    await axios.post(
+      `${API_URL}/api/admin/posts`,
+      {
+        ...postData,
+        thumbnailImageKey: postData.thumbnail,
       },
-    });
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+      }
+    );
     mutate();
   };
 
@@ -53,7 +79,7 @@ export const useAdminPost = () => {
     postData: {
       title: string;
       content: string;
-      thumbnailUrl: string;
+      thumbnailImageKey: string;
       categories: { id: number }[];
     }
   ) => {
@@ -86,5 +112,6 @@ export const useAdminPost = () => {
     detailPost,
     updatePost,
     deletePost,
+    uploadThumbnail,
   };
 };
