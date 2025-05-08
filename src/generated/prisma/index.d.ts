@@ -1136,7 +1136,7 @@ export namespace Prisma {
     id: number | null
     title: string | null
     content: string | null
-    thumbnailUrl: string | null
+    thumbnailImageKey: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -1145,7 +1145,7 @@ export namespace Prisma {
     id: number | null
     title: string | null
     content: string | null
-    thumbnailUrl: string | null
+    thumbnailImageKey: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -1154,7 +1154,7 @@ export namespace Prisma {
     id: number
     title: number
     content: number
-    thumbnailUrl: number
+    thumbnailImageKey: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -1173,7 +1173,7 @@ export namespace Prisma {
     id?: true
     title?: true
     content?: true
-    thumbnailUrl?: true
+    thumbnailImageKey?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -1182,7 +1182,7 @@ export namespace Prisma {
     id?: true
     title?: true
     content?: true
-    thumbnailUrl?: true
+    thumbnailImageKey?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -1191,7 +1191,7 @@ export namespace Prisma {
     id?: true
     title?: true
     content?: true
-    thumbnailUrl?: true
+    thumbnailImageKey?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -1287,7 +1287,7 @@ export namespace Prisma {
     id: number
     title: string
     content: string
-    thumbnailUrl: string
+    thumbnailImageKey: string
     createdAt: Date
     updatedAt: Date
     _count: PostCountAggregateOutputType | null
@@ -1315,7 +1315,7 @@ export namespace Prisma {
     id?: boolean
     title?: boolean
     content?: boolean
-    thumbnailUrl?: boolean
+    thumbnailImageKey?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     postCategories?: boolean | Post$postCategoriesArgs<ExtArgs>
@@ -1326,7 +1326,7 @@ export namespace Prisma {
     id?: boolean
     title?: boolean
     content?: boolean
-    thumbnailUrl?: boolean
+    thumbnailImageKey?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["post"]>
@@ -1335,7 +1335,7 @@ export namespace Prisma {
     id?: boolean
     title?: boolean
     content?: boolean
-    thumbnailUrl?: boolean
+    thumbnailImageKey?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["post"]>
@@ -1344,12 +1344,12 @@ export namespace Prisma {
     id?: boolean
     title?: boolean
     content?: boolean
-    thumbnailUrl?: boolean
+    thumbnailImageKey?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type PostOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "content" | "thumbnailUrl" | "createdAt" | "updatedAt", ExtArgs["result"]["post"]>
+  export type PostOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "content" | "thumbnailImageKey" | "createdAt" | "updatedAt", ExtArgs["result"]["post"]>
   export type PostInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     postCategories?: boolean | Post$postCategoriesArgs<ExtArgs>
     _count?: boolean | PostCountOutputTypeDefaultArgs<ExtArgs>
@@ -1366,7 +1366,7 @@ export namespace Prisma {
       id: number
       title: string
       content: string
-      thumbnailUrl: string
+      thumbnailImageKey: string
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["post"]>
@@ -1796,7 +1796,7 @@ export namespace Prisma {
     readonly id: FieldRef<"Post", 'Int'>
     readonly title: FieldRef<"Post", 'String'>
     readonly content: FieldRef<"Post", 'String'>
-    readonly thumbnailUrl: FieldRef<"Post", 'String'>
+    readonly thumbnailImageKey: FieldRef<"Post", 'String'>
     readonly createdAt: FieldRef<"Post", 'DateTime'>
     readonly updatedAt: FieldRef<"Post", 'DateTime'>
   }
@@ -2028,6 +2028,7 @@ export namespace Prisma {
      * The data used to create many Posts.
      */
     data: PostCreateManyInput | PostCreateManyInput[]
+    skipDuplicates?: boolean
   }
 
   /**
@@ -2046,6 +2047,7 @@ export namespace Prisma {
      * The data used to create many Posts.
      */
     data: PostCreateManyInput | PostCreateManyInput[]
+    skipDuplicates?: boolean
   }
 
   /**
@@ -3117,6 +3119,7 @@ export namespace Prisma {
      * The data used to create many Categories.
      */
     data: CategoryCreateManyInput | CategoryCreateManyInput[]
+    skipDuplicates?: boolean
   }
 
   /**
@@ -3135,6 +3138,7 @@ export namespace Prisma {
      * The data used to create many Categories.
      */
     data: CategoryCreateManyInput | CategoryCreateManyInput[]
+    skipDuplicates?: boolean
   }
 
   /**
@@ -4239,6 +4243,7 @@ export namespace Prisma {
      * The data used to create many PostCategories.
      */
     data: PostCategoryCreateManyInput | PostCategoryCreateManyInput[]
+    skipDuplicates?: boolean
   }
 
   /**
@@ -4257,6 +4262,7 @@ export namespace Prisma {
      * The data used to create many PostCategories.
      */
     data: PostCategoryCreateManyInput | PostCategoryCreateManyInput[]
+    skipDuplicates?: boolean
     /**
      * Choose, which related nodes to fetch as well
      */
@@ -4427,6 +4433,9 @@ export namespace Prisma {
    */
 
   export const TransactionIsolationLevel: {
+    ReadUncommitted: 'ReadUncommitted',
+    ReadCommitted: 'ReadCommitted',
+    RepeatableRead: 'RepeatableRead',
     Serializable: 'Serializable'
   };
 
@@ -4437,7 +4446,7 @@ export namespace Prisma {
     id: 'id',
     title: 'title',
     content: 'content',
-    thumbnailUrl: 'thumbnailUrl',
+    thumbnailImageKey: 'thumbnailImageKey',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -4474,6 +4483,14 @@ export namespace Prisma {
   export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
+  export const QueryMode: {
+    default: 'default',
+    insensitive: 'insensitive'
+  };
+
+  export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
   /**
    * Field references
    */
@@ -4487,9 +4504,23 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Int[]'
+   */
+  export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+  /**
    * Reference to a field of type 'String'
    */
   export type StringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String'>
+    
+
+
+  /**
+   * Reference to a field of type 'String[]'
+   */
+  export type ListStringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String[]'>
     
 
 
@@ -4501,9 +4532,23 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'DateTime[]'
+   */
+  export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+  /**
    * Reference to a field of type 'Float'
    */
   export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+    
+
+
+  /**
+   * Reference to a field of type 'Float[]'
+   */
+  export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
     
   /**
    * Deep Input Types
@@ -4517,7 +4562,7 @@ export namespace Prisma {
     id?: IntFilter<"Post"> | number
     title?: StringFilter<"Post"> | string
     content?: StringFilter<"Post"> | string
-    thumbnailUrl?: StringFilter<"Post"> | string
+    thumbnailImageKey?: StringFilter<"Post"> | string
     createdAt?: DateTimeFilter<"Post"> | Date | string
     updatedAt?: DateTimeFilter<"Post"> | Date | string
     postCategories?: PostCategoryListRelationFilter
@@ -4527,7 +4572,7 @@ export namespace Prisma {
     id?: SortOrder
     title?: SortOrder
     content?: SortOrder
-    thumbnailUrl?: SortOrder
+    thumbnailImageKey?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     postCategories?: PostCategoryOrderByRelationAggregateInput
@@ -4540,7 +4585,7 @@ export namespace Prisma {
     NOT?: PostWhereInput | PostWhereInput[]
     title?: StringFilter<"Post"> | string
     content?: StringFilter<"Post"> | string
-    thumbnailUrl?: StringFilter<"Post"> | string
+    thumbnailImageKey?: StringFilter<"Post"> | string
     createdAt?: DateTimeFilter<"Post"> | Date | string
     updatedAt?: DateTimeFilter<"Post"> | Date | string
     postCategories?: PostCategoryListRelationFilter
@@ -4550,7 +4595,7 @@ export namespace Prisma {
     id?: SortOrder
     title?: SortOrder
     content?: SortOrder
-    thumbnailUrl?: SortOrder
+    thumbnailImageKey?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: PostCountOrderByAggregateInput
@@ -4567,7 +4612,7 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"Post"> | number
     title?: StringWithAggregatesFilter<"Post"> | string
     content?: StringWithAggregatesFilter<"Post"> | string
-    thumbnailUrl?: StringWithAggregatesFilter<"Post"> | string
+    thumbnailImageKey?: StringWithAggregatesFilter<"Post"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Post"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Post"> | Date | string
   }
@@ -4687,7 +4732,7 @@ export namespace Prisma {
   export type PostCreateInput = {
     title: string
     content: string
-    thumbnailUrl: string
+    thumbnailImageKey: string
     createdAt?: Date | string
     updatedAt?: Date | string
     postCategories?: PostCategoryCreateNestedManyWithoutPostInput
@@ -4697,7 +4742,7 @@ export namespace Prisma {
     id?: number
     title: string
     content: string
-    thumbnailUrl: string
+    thumbnailImageKey: string
     createdAt?: Date | string
     updatedAt?: Date | string
     postCategories?: PostCategoryUncheckedCreateNestedManyWithoutPostInput
@@ -4706,7 +4751,7 @@ export namespace Prisma {
   export type PostUpdateInput = {
     title?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
-    thumbnailUrl?: StringFieldUpdateOperationsInput | string
+    thumbnailImageKey?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     postCategories?: PostCategoryUpdateManyWithoutPostNestedInput
@@ -4716,7 +4761,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
-    thumbnailUrl?: StringFieldUpdateOperationsInput | string
+    thumbnailImageKey?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     postCategories?: PostCategoryUncheckedUpdateManyWithoutPostNestedInput
@@ -4726,7 +4771,7 @@ export namespace Prisma {
     id?: number
     title: string
     content: string
-    thumbnailUrl: string
+    thumbnailImageKey: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -4734,7 +4779,7 @@ export namespace Prisma {
   export type PostUpdateManyMutationInput = {
     title?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
-    thumbnailUrl?: StringFieldUpdateOperationsInput | string
+    thumbnailImageKey?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -4743,7 +4788,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
-    thumbnailUrl?: StringFieldUpdateOperationsInput | string
+    thumbnailImageKey?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -4851,8 +4896,8 @@ export namespace Prisma {
 
   export type IntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[]
-    notIn?: number[]
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
     lt?: number | IntFieldRefInput<$PrismaModel>
     lte?: number | IntFieldRefInput<$PrismaModel>
     gt?: number | IntFieldRefInput<$PrismaModel>
@@ -4862,8 +4907,8 @@ export namespace Prisma {
 
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
-    in?: string[]
-    notIn?: string[]
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
     lt?: string | StringFieldRefInput<$PrismaModel>
     lte?: string | StringFieldRefInput<$PrismaModel>
     gt?: string | StringFieldRefInput<$PrismaModel>
@@ -4871,13 +4916,14 @@ export namespace Prisma {
     contains?: string | StringFieldRefInput<$PrismaModel>
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
   export type DateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[]
-    notIn?: Date[] | string[]
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
     lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
@@ -4899,7 +4945,7 @@ export namespace Prisma {
     id?: SortOrder
     title?: SortOrder
     content?: SortOrder
-    thumbnailUrl?: SortOrder
+    thumbnailImageKey?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -4912,7 +4958,7 @@ export namespace Prisma {
     id?: SortOrder
     title?: SortOrder
     content?: SortOrder
-    thumbnailUrl?: SortOrder
+    thumbnailImageKey?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -4921,7 +4967,7 @@ export namespace Prisma {
     id?: SortOrder
     title?: SortOrder
     content?: SortOrder
-    thumbnailUrl?: SortOrder
+    thumbnailImageKey?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -4932,8 +4978,8 @@ export namespace Prisma {
 
   export type IntWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[]
-    notIn?: number[]
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
     lt?: number | IntFieldRefInput<$PrismaModel>
     lte?: number | IntFieldRefInput<$PrismaModel>
     gt?: number | IntFieldRefInput<$PrismaModel>
@@ -4948,8 +4994,8 @@ export namespace Prisma {
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
-    in?: string[]
-    notIn?: string[]
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
     lt?: string | StringFieldRefInput<$PrismaModel>
     lte?: string | StringFieldRefInput<$PrismaModel>
     gt?: string | StringFieldRefInput<$PrismaModel>
@@ -4957,6 +5003,7 @@ export namespace Prisma {
     contains?: string | StringFieldRefInput<$PrismaModel>
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
     not?: NestedStringWithAggregatesFilter<$PrismaModel> | string
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedStringFilter<$PrismaModel>
@@ -4965,8 +5012,8 @@ export namespace Prisma {
 
   export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[]
-    notIn?: Date[] | string[]
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
     lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
@@ -5182,8 +5229,8 @@ export namespace Prisma {
 
   export type NestedIntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[]
-    notIn?: number[]
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
     lt?: number | IntFieldRefInput<$PrismaModel>
     lte?: number | IntFieldRefInput<$PrismaModel>
     gt?: number | IntFieldRefInput<$PrismaModel>
@@ -5193,8 +5240,8 @@ export namespace Prisma {
 
   export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
-    in?: string[]
-    notIn?: string[]
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
     lt?: string | StringFieldRefInput<$PrismaModel>
     lte?: string | StringFieldRefInput<$PrismaModel>
     gt?: string | StringFieldRefInput<$PrismaModel>
@@ -5207,8 +5254,8 @@ export namespace Prisma {
 
   export type NestedDateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[]
-    notIn?: Date[] | string[]
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
     lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
@@ -5218,8 +5265,8 @@ export namespace Prisma {
 
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[]
-    notIn?: number[]
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
     lt?: number | IntFieldRefInput<$PrismaModel>
     lte?: number | IntFieldRefInput<$PrismaModel>
     gt?: number | IntFieldRefInput<$PrismaModel>
@@ -5234,8 +5281,8 @@ export namespace Prisma {
 
   export type NestedFloatFilter<$PrismaModel = never> = {
     equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[]
-    notIn?: number[]
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
     lt?: number | FloatFieldRefInput<$PrismaModel>
     lte?: number | FloatFieldRefInput<$PrismaModel>
     gt?: number | FloatFieldRefInput<$PrismaModel>
@@ -5245,8 +5292,8 @@ export namespace Prisma {
 
   export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
-    in?: string[]
-    notIn?: string[]
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
     lt?: string | StringFieldRefInput<$PrismaModel>
     lte?: string | StringFieldRefInput<$PrismaModel>
     gt?: string | StringFieldRefInput<$PrismaModel>
@@ -5262,8 +5309,8 @@ export namespace Prisma {
 
   export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[]
-    notIn?: Date[] | string[]
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
     lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
@@ -5294,6 +5341,7 @@ export namespace Prisma {
 
   export type PostCategoryCreateManyPostInputEnvelope = {
     data: PostCategoryCreateManyPostInput | PostCategoryCreateManyPostInput[]
+    skipDuplicates?: boolean
   }
 
   export type PostCategoryUpsertWithWhereUniqueWithoutPostInput = {
@@ -5343,6 +5391,7 @@ export namespace Prisma {
 
   export type PostCategoryCreateManyCategoryInputEnvelope = {
     data: PostCategoryCreateManyCategoryInput | PostCategoryCreateManyCategoryInput[]
+    skipDuplicates?: boolean
   }
 
   export type PostCategoryUpsertWithWhereUniqueWithoutCategoryInput = {
@@ -5364,7 +5413,7 @@ export namespace Prisma {
   export type PostCreateWithoutPostCategoriesInput = {
     title: string
     content: string
-    thumbnailUrl: string
+    thumbnailImageKey: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -5373,7 +5422,7 @@ export namespace Prisma {
     id?: number
     title: string
     content: string
-    thumbnailUrl: string
+    thumbnailImageKey: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -5415,7 +5464,7 @@ export namespace Prisma {
   export type PostUpdateWithoutPostCategoriesInput = {
     title?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
-    thumbnailUrl?: StringFieldUpdateOperationsInput | string
+    thumbnailImageKey?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -5424,7 +5473,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
-    thumbnailUrl?: StringFieldUpdateOperationsInput | string
+    thumbnailImageKey?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

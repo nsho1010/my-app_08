@@ -7,7 +7,7 @@ type UpdatePost = {
   title: string;
   content: string;
   categories: { id: number }[];
-  thumbnailUrl: string;
+  thumbnailImageKey: string;
 };
 
 // 管理者＿記事詳細取得API
@@ -44,7 +44,7 @@ export const PUT = async (
 ) => {
   const { id } = params;
 
-  const { title, content, categories, thumbnailUrl }: UpdatePost =
+  const { title, content, categories, thumbnailImageKey }: UpdatePost =
     await req.json();
 
   try {
@@ -56,7 +56,7 @@ export const PUT = async (
       data: {
         title,
         content,
-        thumbnailUrl,
+        thumbnailImageKey,
       },
     });
 

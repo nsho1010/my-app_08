@@ -3,13 +3,16 @@
 import { ReactNode } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useRouteGuard } from "../_hooks/useRouteGuard";
 
 type Props = {
   children: ReactNode;
 };
 
 export const AdminLayout = ({ children }: Props) => {
+  useRouteGuard();
   const pathname = usePathname();
+
   return (
     <div className="flex min-h-screen">
       <aside className="w-64 bg-gray-100 p-4">
