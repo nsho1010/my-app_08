@@ -1,19 +1,12 @@
 import { GetPostsResponse, Post } from "@/app/_types";
-import axios from "axios";
 import useSWR from "swr";
 import { useSupabaseSession } from "../useSupabaseSession";
 import { supabase } from "@/utils/supabase";
 import { v4 as uuidv4 } from "uuid";
-const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+import { api } from "@/app/_lib/api";
 
-const fetcher = async (url: string, token: string) => {
-  const res = await axios.get(url, {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: token,
-    },
-  });
-  return res.data;
+const fetcher = async <T>(url: string, token: string): Promise<T> => {
+  return api.get<T>(url, token);
 };
 
 export const useAdminPost = () => {
@@ -21,15 +14,21 @@ export const useAdminPost = () => {
 
   // 記事一覧取得GET
   const { data, error, isLoading, mutate } = useSWR<GetPostsResponse>(
-    token ? [`${API_URL}/api/admin/posts`, token] : null,
-    ([url, token]: [string, string]) => fetcher(url, token)
+    token ? ["/api/admin/posts", token] : null,
+    token
+      ? ([url, token]: [string, string]) =>
+          fetcher<GetPostsResponse>(url, token)
+      : null
   );
 
   // 記事詳細取得GET
   const detailPost = (id: string | number) => {
     return useSWR<{ result: string; post: Post }>(
-      token ? [`${API_URL}/api/admin/posts/${id}`, token] : null,
-      ([url, token]: [string, string]) => fetcher(url, token)
+      token ? [`/api/admin/posts/${id}`, token] : null,
+      token
+        ? ([url, token]: [string, string]) =>
+            fetcher<{ result: string; post: Post }>(url, token)
+        : null
     );
   };
 
@@ -50,25 +49,21 @@ export const useAdminPost = () => {
     return data.path;
   };
 
-  // 記事新規作成POST
+  // 記事作成POST
   const createPost = async (postData: {
     title: string;
     content: string;
     thumbnail: string;
     categories: { id: number }[];
   }) => {
-    await axios.post(
-      `${API_URL}/api/admin/posts`,
+    if (!token) return;
+    await api.post(
+      "/api/admin/posts",
       {
         ...postData,
         thumbnailImageKey: postData.thumbnail,
       },
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: token,
-        },
-      }
+      token
     );
     mutate();
   };
@@ -79,27 +74,19 @@ export const useAdminPost = () => {
     postData: {
       title: string;
       content: string;
-      thumbnailImageKey: string;
+      thumbnail: string;
       categories: { id: number }[];
     }
   ) => {
-    await axios.put(`${API_URL}/api/admin/posts/${id}`, postData, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: token,
-      },
-    });
+    if (!token) return;
+    await api.put(`/api/admin/posts/${id}`, postData, token);
     mutate();
   };
 
   // 記事削除
   const deletePost = async (id: string) => {
-    await axios.delete(`${API_URL}/api/admin/posts/${id}`, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: token,
-      },
-    });
+    if (!token) return;
+    await api.delete(`/api/admin/posts/${id}`, token);
     mutate();
   };
 
